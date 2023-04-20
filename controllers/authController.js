@@ -14,7 +14,11 @@ exports.signup=async (req,res)=>{
             email:req.body.email,
             contactNumber:req.body.contactNumber
         }
-        if(await User.findOne({email:userObj.email})){
+        /*practically we should not allow anyone to set the role of Admin as its basically owner of App
+        one would need to change it from database*/
+        if(/admin/i.test(req.body.role) || req.body.isAdmin)
+            res.status(400).json({"message":"user role cannot be ADMIN"})
+        else if(await User.findOne({email:userObj.email})){
             res.status(400).json({"message":"Try any other email, this email is already registered!"})
         }
         else{
