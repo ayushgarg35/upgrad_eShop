@@ -10,7 +10,7 @@ exports.searchProducts=async (req,res)=>{
     let direction="DESC"
     if(req.query.direction==="ASC")//ensuring the value of direction is either ASC or DESC
         direction=req.query.direction
-    //creating an object for sorting
+    //creating an object for sorting dynamically.
     const sortObj = {};
     sortObj[sortBy] = direction;
     //using regex to select category and name of products.
