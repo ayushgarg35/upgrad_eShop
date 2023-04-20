@@ -1,6 +1,11 @@
 const mongoose = require("mongoose")
 
 const productSchema = mongoose.Schema({
+    _id:{
+        type: Number,
+        required: true,
+        alias:"productId"
+    },
     name: {
         type: String,
         required: true

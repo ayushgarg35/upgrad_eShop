@@ -1,6 +1,10 @@
 const mongoose = require("mongoose")
-
+let id=0
 const UserSchema = new mongoose.Schema({
+    _id:{
+        type:Number,
+        required:true,
+    },
     firstName:{
         type:String,
         required:true
@@ -26,13 +30,13 @@ const UserSchema = new mongoose.Schema({
     created:{
         type: Date,
         immutable:true,
-        deafult : ()=>{
+        default : ()=>{
             return Date.now()
         }
     },
     updated:{
         type:Date,
-        deafult:()=>{
+        default:()=>{
             return Date.now()
         }
     },
@@ -42,10 +46,8 @@ const UserSchema = new mongoose.Schema({
     },
     isAdmin:{
         type:Boolean,
-        deafult:null
+        default:null
     }
-
-
 })
 
 module.exports= new mongoose.model('user',UserSchema)
