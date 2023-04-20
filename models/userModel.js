@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-let id=0
+
 const UserSchema = new mongoose.Schema({
     _id:{
         type:Number,

@@ -1,7 +1,7 @@
 const Products=require("../models/productModel")
 const { default: mongoose } = require("mongoose")
 
-//searchProduct API which will use a get request
+//searchProduct API which will use a GET request
 exports.searchProducts=async (req,res)=>{
     try{
     const name=req.query.name || ""
@@ -23,7 +23,7 @@ exports.searchProducts=async (req,res)=>{
         res.status(400).json({"message":"internal server error"})
     }
 }
-//getProductCategories API which will use a get request
+//getProductCategories API which will use a GET request
 exports.getProductCategories=async (req,res)=>{
     const categoryList= await Products.distinct('category')
     console.log(categoryList)
@@ -31,7 +31,7 @@ exports.getProductCategories=async (req,res)=>{
 
 }
 
-//getProductById API which will use a get request
+//getProductById API which will use a GET request
 exports.getProductById = async (req,res)=>{
     try{
     const id= parseInt(req.params.id)
@@ -47,6 +47,8 @@ exports.getProductById = async (req,res)=>{
     }
 
 }
+
+//saveProduct API which will use a POST request
 exports.saveProduct = async (req,res)=>{
     try{
         const productObj={
@@ -83,6 +85,7 @@ exports.saveProduct = async (req,res)=>{
 
 }
 
+//deleteProduct API which will use a PUT request
 exports.updateProduct = async(req,res)=>{
     try{
         const updateProductObj={
@@ -108,6 +111,7 @@ exports.updateProduct = async(req,res)=>{
             }
 }
 
+//deleteProduct API which will use a DELETE request
 exports.deleteProduct = async(req,res)=>{
     try{
         const deleteProductObj={
