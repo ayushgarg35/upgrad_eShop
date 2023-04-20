@@ -1,7 +1,7 @@
 const Products=require("../models/productModel")
 const { default: mongoose } = require("mongoose")
 
-
+//searchProduct API which will use a get request
 exports.searchProducts=async (req,res)=>{
     try{
     const name=req.query.name || ""
@@ -23,6 +23,7 @@ exports.searchProducts=async (req,res)=>{
         res.status(400).json({"message":"internal server error"})
     }
 }
+//getProductCategories API which will use a get request
 exports.getProductCategories=async (req,res)=>{
     const categoryList= await Products.distinct('category')
     console.log(categoryList)
@@ -30,12 +31,11 @@ exports.getProductCategories=async (req,res)=>{
 
 }
 
+//getProductById API which will use a get request
 exports.getProductById = async (req,res)=>{
     try{
-    const id= new mongoose.Types.ObjectId(req.params.id)
-    console.log(id)
+    const id= parseInt(req.params.id)
     const product= await Products.findOne({_id:id})
-    console.log(product.name)
     if(!product){
         res.status(404).json({"message":`No Product found for ID - ${id}!`})
     }
@@ -50,6 +50,7 @@ exports.getProductById = async (req,res)=>{
 exports.saveProduct = async (req,res)=>{
     try{
         const productObj={
+            _id:await Products.countDocuments()+1,
             name:req.body.name,
             category:req.body.category,
             price:req.body.price,
@@ -85,7 +86,7 @@ exports.saveProduct = async (req,res)=>{
 exports.updateProduct = async(req,res)=>{
     try{
         const updateProductObj={
-            productId:new mongoose.Types.ObjectId(req.params.id),
+            productId:req.params.id,
             name : req.body.name,
             availableItems : req.body.availableItems,
             price : req.body.price,
@@ -105,14 +106,12 @@ exports.updateProduct = async(req,res)=>{
                 console.log(err)
                 res.status(400).json({"message":"internal server error"})
             }
-    //await Products.findByIdAndUpdate({_id:updateProductObj.productId},updateProductObj,[options.returnDocument='after'])
-
 }
 
 exports.deleteProduct = async(req,res)=>{
     try{
         const deleteProductObj={
-            productId:new mongoose.Types.ObjectId(req.params.id),
+            productId:req.params.id,
             accessToken:req.headers['access-token']
         }
         const deletedObj=await Products.findById(deleteProductObj.productId)

@@ -6,15 +6,18 @@ const mongoose=require("mongoose")
 
 exports.createOrders = async (req,res)=>{
     try{
-        const productId=new mongoose.Types.ObjectId(req.body.productId)
-        const addressId=new mongoose.Types.ObjectId(req.body.addressId)
+        const productId= req.body.productId
+        const addressId= req.body.addressId
+
         let orderObj={
+            _id:await Order.countDocuments()+1,
             user:await User.findOne({email:req.email}),
             shippingAddress:await Address.findById(addressId),
             product:await Products.findById(productId),
             quantity:req.body.quantity,
             amount:0.0
         }
+        
         if(!orderObj.product)
             res.status(404).json({"message":`No Product found for ID - ${productId}!`})
         else if(!orderObj.shippingAddress)

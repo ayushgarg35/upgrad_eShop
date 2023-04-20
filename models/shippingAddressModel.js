@@ -1,6 +1,10 @@
 
 const mongoose = require("mongoose")
 const SASchema = new mongoose.Schema({
+    _id:{
+        type:Number,
+        require:true
+    },
     name:{
         type:String,
         required:true
