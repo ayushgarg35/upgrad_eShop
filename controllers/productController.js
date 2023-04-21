@@ -54,10 +54,10 @@ exports.saveProduct = async (req,res)=>{
             _id:(await Products.find()).length===0?1:(await Products.findOne().sort({_id:-1}).limit(1))._id+1,
             name:req.body.name,
             category:req.body.category,
-            price:req.body.price,
+            price:parseFloat(req.body.price),
             description:req.body.description,
             manufacturer:req.body.manufacturer,
-            availableItems:req.body.availableItems,
+            availableItems:parseInt(req.body.availableItems),
             imageUrl:req.body.imageUrl
         }
         const product=await Products.create(productObj)

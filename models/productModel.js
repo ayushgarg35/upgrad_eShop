@@ -11,12 +11,12 @@ const productSchema = mongoose.Schema({
         required: true
     },
     availableItems: {
-        type: String,
-        default: '0'
+        type: Number,
+        default: 0
     },
 
     price: {
-        type: String,
+        type: mongoose.Schema.Types.Decimal128,
         required: true
     },
     category: {

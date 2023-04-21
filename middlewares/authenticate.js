@@ -11,7 +11,11 @@ module.exports= (req, res, next) => {
             jwt.verify(token, require("../configs/secretKey").key, (err, decoded) => {
                 if (err) {
                     console.log(err)
-                    res.status(401).json({ "messaage": "unauthorised" })
+                    if (err.name === 'TokenExpiredError') {
+                        res.status(401).json({ "message": "Token expired. Please log in again." })
+                      } else {
+                        res.status(401).json({ "message": "Invalid token. Please log in again." })
+                      }
                 }
                 else
                     req.email = decoded.id
