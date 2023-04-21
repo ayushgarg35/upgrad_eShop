@@ -15,7 +15,6 @@ exports.searchProducts=async (req,res)=>{
     //using regex to select category and name of products.
     const content= await Products.find({category:{$regex:category,$options:'i'},name:{$regex:name,$options:"i"}}).sort(sortObj)
     
-    console.log(content)
     res.status(200).json(content)
     }catch(err){
         console.log(err)
@@ -23,11 +22,8 @@ exports.searchProducts=async (req,res)=>{
     }
 }
 //getProductCategories API which will use a GET request
-exports.getProductCategories=async (req,res)=>{
-    const categoryList= await Products.distinct('category')
-    console.log(categoryList)
-    res.status(200).json({"categories":categoryList})
-
+exports.getProductCategories=async (req,res)=>{ 
+    res.status(200).json({"categories":await Products.distinct('category')})
 }
 
 //getProductById API which will use a GET request
