@@ -3,7 +3,7 @@ const User=require("../models/userModel")
 
 exports.addAddress= async (req,res)=>{
     try{    const addressObj={
-        _id:await Address.countDocuments()+1,
+        _id:(await Address.find()).length===0?1:(await Address.findOne().sort({_id:-1}).limit(1))._id+1,
         name:req.body.name,
         contactNumber:req.body.contactNumber,
         city:req.body.city,

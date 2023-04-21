@@ -2,15 +2,13 @@ const Products= require("../models/productModel")
 const Address= require("../models/shippingAddressModel")
 const User=require("../models/userModel")
 const Order = require("../models/orderModel")
-const mongoose=require("mongoose")
 
 exports.createOrders = async (req,res)=>{
     try{
         const productId= req.body.productId
         const addressId= req.body.addressId
-
         let orderObj={
-            _id:await Order.countDocuments()+1,
+            _id:(await Order.find()).length===0?1: (await Order.findOne().sort({_id:-1}).limit(1))._id+1,
             user:await User.findOne({email:req.email}),
             shippingAddress:await Address.findById(addressId),
             product:await Products.findById(productId),
