@@ -7,7 +7,7 @@ const bcrypt=require('bcrypt')
 exports.signup=async (req,res)=>{     
     try{
         const userObj={
-            _id:await User.countDocuments()+1,
+            _id:(await User.find()).length===0?1:(await User.findOne().sort({_id:-1}).limit(1))._id+1,
             firstName:req.body.firstName,
             lastName:req.body.lastName,
             password:bcrypt.hashSync(req.body.password,10),

@@ -1,5 +1,4 @@
 const Products=require("../models/productModel")
-const { default: mongoose } = require("mongoose")
 
 //searchProduct API which will use a GET request
 exports.searchProducts=async (req,res)=>{
@@ -52,7 +51,7 @@ exports.getProductById = async (req,res)=>{
 exports.saveProduct = async (req,res)=>{
     try{
         const productObj={
-            _id:await Products.countDocuments()+1,
+            _id:(await Products.find()).length===0?1:(await Products.findOne().sort({_id:-1}).limit(1))._id+1,
             name:req.body.name,
             category:req.body.category,
             price:req.body.price,
