@@ -5,20 +5,20 @@ const orderSchema = new mongoose.Schema({
         type:Number,
         require:true
     },
-    user:{
-        type:Object,
+    userId:{
+        type:Number,
         required:true
     },
-    product:{
-        type:Object,
+    productId:{
+        type:Number,
         required:true
     },
-    shippingAddress:{
-        type:Object,
+    shippingAddressId:{
+        type:Number,
         required:true
     },
     amount:{
-        type:Number,
+        type:mongoose.Schema.Types.Decimal128,
         required:true
     },
     orderDate:{
